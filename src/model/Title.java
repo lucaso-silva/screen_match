@@ -1,6 +1,7 @@
 package model;
 
-public abstract class Title implements Comparable<Title> {
+
+public class Title implements Comparable<Title> {
     private final String title;
     private final int releaseYear;
     private boolean isIncludedInPlan;
