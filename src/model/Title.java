@@ -1,6 +1,7 @@
 package model;
 
 import com.google.gson.annotations.SerializedName;
+import exception.YearConversionException;
 import model.dto.TitleOmdb;
 
 public class Title implements Comparable<Title> {
@@ -20,6 +21,9 @@ public class Title implements Comparable<Title> {
 
     public Title(TitleOmdb myTitleOmdb) {
         this.title = myTitleOmdb.title();
+        if(myTitleOmdb.year().length() > 4){
+            throw new YearConversionException("Error: year length is too long");
+        }
         this.releaseYear = Integer.parseInt(myTitleOmdb.year());
         this.durationInMinutes = Integer.parseInt(myTitleOmdb.runtime().substring(0, myTitleOmdb.runtime().indexOf(" ")));
     }

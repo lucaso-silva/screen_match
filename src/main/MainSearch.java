@@ -2,6 +2,7 @@ package main;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import exception.YearConversionException;
 import model.Title;
 import model.dto.TitleOmdb;
 
@@ -61,29 +62,40 @@ public class MainSearch {
 //            System.out.println(e.getMessage());
 //        }
 
-        // Alura implementation -> change client.sendAsync to the interface HttpResponse<String>
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-        HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-        String json = response.body();
-        System.out.println("response json: " + json);
+        try{
+            // Alura implementation -> change client.sendAsync to the interface HttpResponse<String>
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
+            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+            String json = response.body();
+            System.out.println("response json: " + json);
 
-//        Gson gson = new Gson(); //Using this constructor, the fields title, year, and runtime are set to null, because the API Json object these fields are written with uppercase
-        Gson gson = new GsonBuilder().setFieldNamingPolicy(UPPER_CAMEL_CASE)
+//        Gson gson = new Gson(); //Using this constructor, the fields title, year, and runtime are set to null, because in the API Json object these fields are written with uppercase
+            Gson gson = new GsonBuilder().setFieldNamingPolicy(UPPER_CAMEL_CASE)
                 .create();
 
 //        Title myTitle = gson.fromJson(json, Title.class);  //Need to use @SerializedName("")
 //        System.out.println("Title: " + myTitle.getTitle());
 
-        TitleOmdb myTitleOmdb = gson.fromJson(json, TitleOmdb.class);
+            TitleOmdb myTitleOmdb = gson.fromJson(json, TitleOmdb.class);
 
 //        Title myTitle = new Title(myTitleOmdb.title(), Integer.parseInt(myTitleOmdb.year()));
-        Title myTitle = new Title(myTitleOmdb);
 
-        System.out.println("title omdb: " + myTitleOmdb);
-        System.out.println("title: " + myTitle);
+            Title myTitle = new Title(myTitleOmdb);
+
+            System.out.println("title omdb: " + myTitleOmdb);
+            System.out.println("title: " + myTitle);
+        }catch (NumberFormatException e){
+            System.out.println("An error occured");
+            System.out.println(e.getMessage());
+        }catch (IllegalArgumentException e){
+            System.out.println("An error occured. Verify the URL");
+        } catch (YearConversionException e){
+            System.out.println(e.getMessage());
+        }
+
 
     }
 }
