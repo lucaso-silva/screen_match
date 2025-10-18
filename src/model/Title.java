@@ -1,8 +1,12 @@
 package model;
 
+import com.google.gson.annotations.SerializedName;
+import model.dto.TitleOmdb;
 
 public class Title implements Comparable<Title> {
+//    @SerializedName("Title")  // --> Defining and using the model record TitleOmdb, don't need to declare @SerializedName
     private final String title;
+//    @SerializedName("Year")
     private final int releaseYear;
     private boolean isIncludedInPlan;
     private double sumOfRates;
@@ -12,6 +16,12 @@ public class Title implements Comparable<Title> {
     public Title(String title, int releaseYear) {
         this.title = title;
         this.releaseYear = releaseYear;
+    }
+
+    public Title(TitleOmdb myTitleOmdb) {
+        this.title = myTitleOmdb.title();
+        this.releaseYear = Integer.parseInt(myTitleOmdb.year());
+        this.durationInMinutes = Integer.parseInt(myTitleOmdb.runtime().substring(0, myTitleOmdb.runtime().indexOf(" ")));
     }
 
     public String getTitle() {
@@ -64,6 +74,6 @@ public class Title implements Comparable<Title> {
 
     @Override
     public String toString() {
-        return this.getTitle() + " (" + this.getReleaseYear() + ")";
+        return this.getTitle() + " (" + this.getReleaseYear() + ") | " + this.getDurationInMinutes() + " min";
     }
 }
