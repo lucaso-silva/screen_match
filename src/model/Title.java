@@ -78,6 +78,10 @@ public class Title implements Comparable<Title> {
 
     @Override
     public String toString() {
-        return this.getTitle() + " (" + this.getReleaseYear() + ") | " + this.getDurationInMinutes() + " min";
+        return "["
+                    + this.getTitle() +
+                    " (" + this.getReleaseYear() + ") | "
+                    + this.getDurationInMinutes() + " min" +
+                "]";
     }
 }
