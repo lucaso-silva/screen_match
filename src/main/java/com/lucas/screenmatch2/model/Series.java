@@ -1,0 +1,92 @@
+package com.lucas.screenmatch2.model;
+
+import com.fasterxml.jackson.annotation.JsonAlias;
+
+import java.util.OptionalDouble;
+
+public class Series {
+    private  String title;
+    private  Category genre;
+    private String actors;
+    private String plot;
+    private Integer totalSeasons;
+    private Double rate;
+    private String poster;
+
+    public Series(DataTvShow dataTvShow) {
+        this.title = dataTvShow.title();
+        this.genre = Category.fromString(dataTvShow.genre().split(",")[0].trim());
+        this.actors = dataTvShow.actors();
+        this.plot = dataTvShow.plot();
+        this.totalSeasons = dataTvShow.totalSeasons();
+        this.rate = OptionalDouble.of(Double.parseDouble(dataTvShow.rate())).orElse(0.0);
+        this.poster = dataTvShow.poster();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Category getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Category genre) {
+        this.genre = genre;
+    }
+
+    public String getActors() {
+        return actors;
+    }
+
+    public void setActors(String actors) {
+        this.actors = actors;
+    }
+
+    public String getPlot() {
+        return plot;
+    }
+
+    public void setPlot(String plot) {
+        this.plot = plot;
+    }
+
+    public Integer getTotalSeasons() {
+        return totalSeasons;
+    }
+
+    public void setTotalSeasons(Integer totalSeasons) {
+        this.totalSeasons = totalSeasons;
+    }
+
+    public Double getRate() {
+        return rate;
+    }
+
+    public void setRate(Double rate) {
+        this.rate = rate;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    @Override
+    public String toString() {
+        return "title='" + title + '\'' +
+                ", genre=" + genre +
+                ", actors='" + actors + '\'' +
+                ", plot='" + plot + '\'' +
+                ", totalSeasons=" + totalSeasons +
+                ", rate=" + rate +
+                ", poster='" + poster;
+    }
+}
