@@ -1,17 +1,30 @@
 package com.lucas.screenmatch2.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.OptionalDouble;
 
+@Entity
 public class Series {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(unique = true)
     private  String title;
+    @Enumerated(EnumType.STRING)
     private  Category genre;
     private String actors;
     private String plot;
     private Integer totalSeasons;
     private Double rate;
     private String poster;
+    @Transient
+    private List<Episode> episodes = new ArrayList<>();
+
+    public Series() {
+    }
 
     public Series(DataTvShow dataTvShow) {
         this.title = dataTvShow.title();
@@ -23,8 +36,24 @@ public class Series {
         this.poster = dataTvShow.poster();
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
+    }
+
+    public List<Episode> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(List<Episode> episodes) {
+        this.episodes = episodes;
     }
 
     public void setTitle(String title) {

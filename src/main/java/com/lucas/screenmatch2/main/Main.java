@@ -3,13 +3,13 @@ package com.lucas.screenmatch2.main;
 import com.lucas.screenmatch2.model.DataSeason;
 import com.lucas.screenmatch2.model.DataTvShow;
 import com.lucas.screenmatch2.model.Series;
+import com.lucas.screenmatch2.repository.SeriesRepository;
 import com.lucas.screenmatch2.service.ConsumeAPI;
 import com.lucas.screenmatch2.service.DataConverter;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Main {
 
@@ -19,6 +19,11 @@ public class Main {
     private ConsumeAPI consumeAPI = new ConsumeAPI();
     private DataConverter dataConverter = new DataConverter();
     private List<DataTvShow> tvShows = new  ArrayList<>();
+    private SeriesRepository seriesRepository;
+
+    public Main(SeriesRepository seriesRepository) {
+        this.seriesRepository = seriesRepository;
+    }
 
     public void displayMenu(){
         var menu = """
@@ -95,7 +100,10 @@ public class Main {
 
     private void searchTVShow() {
         var tvShow = getDataTvShow();
-        tvShows.add(tvShow);
+//        tvShows.add(tvShow);
+        Series series = new Series(tvShow);
+
+        seriesRepository.save(series);
         System.out.println(tvShow);
     }
 
