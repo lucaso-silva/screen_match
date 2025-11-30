@@ -25,4 +25,8 @@ public enum Category {
         }
         throw new IllegalArgumentException("Invalid category: " + strOmdb);
     }
+
+    public String getCategoryOmdb() {
+        return categoryOmdb;
+    }
 }

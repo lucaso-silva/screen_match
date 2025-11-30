@@ -1,14 +1,25 @@
 package com.lucas.screenmatch2.model;
 
+import jakarta.persistence.*;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "episodes")
 public class Episode {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Integer season;
     private String title;
     private Integer episode;
     private Double rate;
     private LocalDate dateRelease;
+    @ManyToOne
+    private Series series;
+
+    public Episode() {}
 
     public Episode(Integer season, DataEpisode dataEpisode){
         this.season = season;
@@ -64,6 +75,22 @@ public class Episode {
 
     public void setDateRelease(LocalDate dateRelease) {
         this.dateRelease = dateRelease;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Series getSeries() {
+        return series;
+    }
+
+    public void setSeries(Series series) {
+        this.series = series;
     }
 
     @Override
